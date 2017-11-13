@@ -59,7 +59,7 @@ namespace ASPNETKata.Controllers
         {
             product.ProductId = id;
             repo.UpdateProduct(product);
-            return RedirectToAction("Index")
+            return RedirectToAction("Index");
         }
 
         // GET: Product/Delete/5
