@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ASPNETKata.Models;
 using System.Data.SqlClient;
+using ASPNETKata.Shared;
 using Dapper;
 using MySql.Data.MySqlClient;
 
