@@ -1,6 +1,10 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using System.Configuration;
+using System.Data;
+using MySql.Data.MySqlClient;
+using ASPNETKata.Shared;
 
 namespace ASPNETKata.App_Start
 {
@@ -34,9 +38,14 @@ namespace ASPNETKata.App_Start
         {
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-
-            // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            var conn = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            container.RegisterType<IDbConnection>(new PerRequestLifetimeManager(), new InjectionFactory((x) =>
+            {
+                var connection = new MySqlConnection(conn);
+                connection.Open();
+                return connection;
+            }));
+            container.RegisterType<IProductRepository, DapperProductRepository>(new TransientLifetimeManager());
         }
     }
 }
